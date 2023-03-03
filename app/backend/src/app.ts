@@ -1,6 +1,7 @@
 import * as express from 'express';
 import * as cors from 'cors';
-import routes from './api/routes/TeamsRouts';
+import teamsRouts from './api/routes/TeamsRouter';
+import loginRouter from './api/routes/LoginRouter';
 
 class App {
   public app: express.Express;
@@ -8,15 +9,16 @@ class App {
   constructor() {
     this.app = express();
     this.app.use(cors());
-    this.router();
     this.config();
+    this.router();
 
     // Não remover essa rota
     this.app.get('/', (req, res) => res.json({ ok: true }));
   }
 
   router(): void {
-    this.app.use(routes);
+    this.app.use('/teams', teamsRouts);
+    this.app.use('/login', loginRouter);
   }
 
   private config():void {
