@@ -1,11 +1,13 @@
 import * as express from 'express';
-import teamRoutes from './api/routes/TeamsRouts';
+import * as cors from 'cors';
+import routes from './api/routes/TeamsRouts';
 
 class App {
   public app: express.Express;
 
   constructor() {
     this.app = express();
+    this.app.use(cors());
     this.router();
     this.config();
 
@@ -14,7 +16,7 @@ class App {
   }
 
   router(): void {
-    this.app.get('/teams', teamRoutes);
+    this.app.use(routes);
   }
 
   private config():void {
