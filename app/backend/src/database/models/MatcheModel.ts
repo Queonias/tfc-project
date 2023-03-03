@@ -1,7 +1,8 @@
 import { Model, INTEGER, BOOLEAN } from 'sequelize';
 import db from '.';
+import Teams from './TeamModel';
 
-class matche extends Model {
+class Matche extends Model {
   declare readonly id: number;
   declare homeTeamGoals: number;
   declare awayTeamGoals: number;
@@ -10,7 +11,7 @@ class matche extends Model {
   declare awayTeamId: number;
 }
 
-matche.init({
+Matche.init({
   id: {
     type: INTEGER,
     allowNull: true,
@@ -49,4 +50,9 @@ matche.init({
   modelName: 'matches',
 });
 
-export default matche;
+Matche.belongsTo(Teams, { foreignKey: 'away_team_id', as: 'away_team_id' });
+Matche.belongsTo(Teams, { foreignKey: 'home_Team_id', as: 'home_Team_id' });
+Teams.hasMany(Matche, { foreignKey: 'away_team_id', as: 'id_post' });
+Teams.hasMany(Matche, { foreignKey: 'home_Team_id', as: 'home_Team_id' });
+
+export default Matche;

@@ -3,43 +3,42 @@ import * as chai from 'chai';
 // @ts-ignore
 import chaiHttp = require('chai-http');
 
-import { app } from '../app';
-import Example from '../database/models/ExampleModel';
+import { App, app } from '../app';
+import TeamModel from '../database/models/TeamModel';
+import TeamService from '../api/services/TeamsService';
 
-import { Response } from 'superagent';
+// import { Response } from 'superagent';
+import { Model } from 'sequelize';
 
 chai.use(chaiHttp);
 
 const { expect } = chai;
 
-describe('Seu teste', () => {
-  /**
-   * Exemplo do uso de stubs com tipos
-   */
+const outputMock = [{
+  id: 1,
+  teamName: 'Joaquim'
+}]
 
-  // let chaiHttpResponse: Response;
+describe('Teste de Serviço: Get Teams', () => {
+  
+  after(()=>{
+    (TeamModel.findAll as sinon.SinonStub).restore();
+  })
 
-  // before(async () => {
-  //   sinon
-  //     .stub(Example, "findOne")
-  //     .resolves({
-  //       ...<Seu mock>
-  //     } as Example);
-  // });
+  it('Caso 1: Deve retornar todos os times corretamente', async () => {
+    sinon.stub(Model, "findAll").resolves([{ id: 1, teamName: 'Joaquim' }] as TeamModel[]);
 
-  // after(()=>{
-  //   (Example.findOne as sinon.SinonStub).restore();
-  // })
+    const service = new TeamService();
+    const result = await service.getAll();
 
-  // it('...', async () => {
-  //   chaiHttpResponse = await chai
-  //      .request(app)
-  //      ...
-
-  //   expect(...)
-  // });
-
-  it('Seu sub-teste', () => {
-    expect(false).to.be.eq(true);
+    expect(result).to.be.deep.equal(outputMock);
+    expect(result.length).to.be.equal(1);
   });
+
+  it('Caso 2: Deve retornar todos os times corretamente', async () => {
+    const app = new App();
+    const response = await chai.request(app.app).get('/teams');
+
+    expect(response.status).to.be.equal(200);
+  })
 });
