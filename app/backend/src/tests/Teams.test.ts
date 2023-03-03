@@ -8,8 +8,6 @@ import TeamModel from '../database/models/TeamModel';
 import TeamService from '../api/services/TeamsService';
 
 // import { Response } from 'superagent';
-import { Model } from 'sequelize';
-
 chai.use(chaiHttp);
 
 const { expect } = chai;
@@ -21,12 +19,12 @@ const outputMock = [{
 
 describe('Teste de Serviço: Get Teams', () => {
   
-  after(()=>{
-    (TeamModel.findAll as sinon.SinonStub).restore();
+  afterEach(()=>{
+    sinon.restore();
   })
 
   it('Caso 1: Deve retornar todos os times corretamente', async () => {
-    sinon.stub(Model, "findAll").resolves([{ id: 1, teamName: 'Joaquim' }] as TeamModel[]);
+    sinon.stub(TeamModel, "findAll").resolves([{ id: 1, teamName: 'Joaquim' }] as TeamModel[]);
 
     const service = new TeamService();
     const result = await service.getAll();
@@ -35,10 +33,27 @@ describe('Teste de Serviço: Get Teams', () => {
     expect(result.length).to.be.equal(1);
   });
 
-  it('Caso 2: Deve retornar todos os times corretamente', async () => {
+  it('Caso 1: Deve retornar todos os times corretamente', async () => {
     const app = new App();
     const response = await chai.request(app.app).get('/teams');
 
     expect(response.status).to.be.equal(200);
   })
+
+  it('Caso 2: Deve retornar dados de um time específico', async () => {
+    sinon.stub(TeamModel, "findByPk").resolves({ id: 1, teamName: 'Joaquim' } as TeamModel);
+
+    const service = new TeamService();
+    const result = await service.getById(1);
+
+    expect(result).to.be.deep.equal(outputMock[0]);
+  });
+
+  it('Caso 1: Deve retornar todos os times corretamente', async () => {
+    const app = new App();
+    const response = await chai.request(app.app).get('/teams/1');
+
+    expect(response.status).to.be.equal(200);
+  })
+  
 });
