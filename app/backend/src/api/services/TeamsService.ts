@@ -8,4 +8,8 @@ export default class TeamService implements IServiceTeam {
   getAll(): Promise<Teams[]> {
     return this.model.findAll();
   }
+
+  getById(id: number): Promise<Teams | null> {
+    return this.model.findByPk(id);
+  }
 }
