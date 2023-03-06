@@ -17,4 +17,9 @@ export default class MatchesService implements IServiceMatches {
       where: query ? { inProgress: valor } : {},
     });
   }
+
+  async finish(id: number): Promise<[number]> {
+    const result = await this.model.update({ inProgress: false }, { where: { id } });
+    return result;
+  }
 }
