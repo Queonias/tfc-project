@@ -8,8 +8,10 @@ class MatchesController {
     this._service = service;
   }
 
-  async getAll(_req: Request, res: Response) {
-    const result = await this._service.getAll();
+  async getAll(req: Request, res: Response) {
+    let { inProgress } = req.query;
+    inProgress = inProgress || '';
+    const result = await this._service.getAll(inProgress as string);
     return res.status(200).json(result);
   }
 }

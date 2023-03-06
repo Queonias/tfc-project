@@ -7,12 +7,14 @@ export default class MatchesService implements IServiceMatches {
   protected model: ModelStatic<MatcheModel> = MatcheModel;
   protected ts: ModelStatic<Teams> = Teams;
 
-  getAll(): Promise<MatcheModel[]> {
+  getAll(query: string): Promise<MatcheModel[]> {
+    const valor = query ? JSON.parse(query) : false;
     return this.model.findAll({
       include: [
         { model: Teams, as: 'homeTeam', attributes: ['teamName'] },
         { model: Teams, as: 'awayTeam', attributes: ['teamName'] },
       ],
+      where: query ? { inProgress: valor } : {},
     });
   }
 }
