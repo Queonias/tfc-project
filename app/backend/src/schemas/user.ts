@@ -7,8 +7,9 @@ const schema = Joi.object({
 });
 
 const validateImputs = (user: ILogin) => {
+  if (!user.email || !user.password) return { type: 400, message: 'All fields must be filled' };
   const { error } = schema.validate(user);
-  if (error) return { type: 400, message: 'All fields must be filled' };
+  if (error) return { type: 401, message: 'Invalid email or password' };
   return { type: null, message: '' };
 };
 
