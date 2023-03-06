@@ -21,12 +21,12 @@ Matche.init({
   homeTeamId: {
     type: INTEGER,
     allowNull: true,
-    field: 'home_Team_id',
+    field: 'home_team_id',
   },
   homeTeamGoals: {
     type: INTEGER,
     allowNull: false,
-    field: 'home_Team_Goals',
+    field: 'home_team_Goals',
   },
   awayTeamId: {
     type: INTEGER,

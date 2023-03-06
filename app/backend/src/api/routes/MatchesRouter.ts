@@ -8,6 +8,8 @@ const matchesService = new MatchesService();
 const matchesController = new MatchesController(matchesService);
 
 router.get('/', ((req: Request, res: Response) => matchesController.getAll(req, res)));
+router.post('/', validateLogin, ((req: Request, res: Response) => matchesController
+  .create(req, res)));
 router.patch('/:id/finish', validateLogin, ((req: Request, res: Response) => matchesController
   .finished(req, res)));
 router.patch('/:id', validateLogin, ((req: Request, res: Response) => matchesController

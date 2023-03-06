@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import IMatchesDate from '../interfaces/IMatchesDate';
 import IServiceMatches from '../interfaces/IServiceMatches';
+import IMatches from '../interfaces/IMatches';
 
 class MatchesController {
   private _service: IServiceMatches;
@@ -31,6 +32,26 @@ class MatchesController {
       .update(id as number, { homeTeamGoals, awayTeamGoals } as IMatchesDate);
 
     return res.status(200).json({ message: 'ok' });
+  }
+
+  async create(req: Request, res: Response) {
+    const {
+      homeTeamId,
+      awayTeamId,
+      homeTeamGoals,
+      awayTeamGoals,
+    } = req.body;
+    const result = await this._service
+      .create({
+        homeTeamGoals,
+        awayTeamGoals,
+        awayTeamId,
+        homeTeamId,
+        inProgress: true,
+
+      } as IMatches);
+
+    return res.status(201).json(result);
   }
 }
 

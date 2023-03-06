@@ -3,6 +3,7 @@ import Teams from '../../database/models/TeamModel';
 import MatcheModel from '../../database/models/MatcheModel';
 import IServiceMatches from '../interfaces/IServiceMatches';
 import IMatchesDate from '../interfaces/IMatchesDate';
+import IMatches from '../interfaces/IMatches';
 
 export default class MatchesService implements IServiceMatches {
   protected model: ModelStatic<MatcheModel> = MatcheModel;
@@ -26,5 +27,10 @@ export default class MatchesService implements IServiceMatches {
 
   async update(id: number, data: IMatchesDate): Promise<void> {
     await this.model.update({ ...data }, { where: { id } });
+  }
+
+  async create(body: IMatches): Promise<IMatches> {
+    const result = await this.model.create({ ...body });
+    return result;
   }
 }
