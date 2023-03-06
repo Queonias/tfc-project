@@ -16,12 +16,12 @@ module.exports = {
         model: 'teams',
         key: 'id',
       },
-      field: 'home_Team_id'
+      field: 'home_team_id'
     },
     homeTeamGoals: {
       type: Sequelize.INTEGER,
       allowNull: false,
-      field: 'home_Team_Goals'
+      field: 'home_team_goals'
     },
     awayTeamId: {
       type: Sequelize.INTEGER,
