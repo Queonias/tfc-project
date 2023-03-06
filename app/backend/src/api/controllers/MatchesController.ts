@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import IMatchesDate from '../interfaces/IMatchesDate';
 import IServiceMatches from '../interfaces/IServiceMatches';
 
 class MatchesController {
@@ -21,6 +22,15 @@ class MatchesController {
     if (result[0]) {
       return res.status(200).json({ message: 'Finished' });
     }
+  }
+
+  async update(req: Request, res: Response) {
+    const id = Number(req.params.id);
+    const { homeTeamGoals, awayTeamGoals } = req.body;
+    await this._service
+      .update(id as number, { homeTeamGoals, awayTeamGoals } as IMatchesDate);
+
+    return res.status(200).json({ message: 'ok' });
   }
 }
 

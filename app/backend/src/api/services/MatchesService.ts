@@ -2,6 +2,7 @@ import { ModelStatic } from 'sequelize';
 import Teams from '../../database/models/TeamModel';
 import MatcheModel from '../../database/models/MatcheModel';
 import IServiceMatches from '../interfaces/IServiceMatches';
+import IMatchesDate from '../interfaces/IMatchesDate';
 
 export default class MatchesService implements IServiceMatches {
   protected model: ModelStatic<MatcheModel> = MatcheModel;
@@ -21,5 +22,9 @@ export default class MatchesService implements IServiceMatches {
   async finish(id: number): Promise<[number]> {
     const result = await this.model.update({ inProgress: false }, { where: { id } });
     return result;
+  }
+
+  async update(id: number, data: IMatchesDate): Promise<void> {
+    await this.model.update({ ...data }, { where: { id } });
   }
 }

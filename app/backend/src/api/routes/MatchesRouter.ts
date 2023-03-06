@@ -10,5 +10,7 @@ const matchesController = new MatchesController(matchesService);
 router.get('/', ((req: Request, res: Response) => matchesController.getAll(req, res)));
 router.patch('/:id/finish', validateLogin, ((req: Request, res: Response) => matchesController
   .finished(req, res)));
+router.patch('/:id', validateLogin, ((req: Request, res: Response) => matchesController
+  .update(req, res)));
 
 export default router;
