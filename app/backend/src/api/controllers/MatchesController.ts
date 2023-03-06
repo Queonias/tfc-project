@@ -41,17 +41,18 @@ class MatchesController {
       homeTeamGoals,
       awayTeamGoals,
     } = req.body;
-    const result = await this._service
-      .create({
-        homeTeamGoals,
-        awayTeamGoals,
-        awayTeamId,
-        homeTeamId,
-        inProgress: true,
+    try {
+      const result = await this._service
+        .create({ homeTeamGoals, awayTeamGoals, awayTeamId, homeTeamId, inProgress: true,
+        } as IMatches);
 
-      } as IMatches);
-
-    return res.status(201).json(result);
+      if (result?.type === 422) {
+        return res.status(result.type).json({ message: result.message });
+      }
+      return res.status(201).json(result.message);
+    } catch (error) {
+      return res.status(404).json({ message: 'There is no team with such id!' });
+    }
   }
 }
 

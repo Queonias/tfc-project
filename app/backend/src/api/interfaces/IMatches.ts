@@ -6,3 +6,8 @@ export default interface IMatches {
   awayTeamGoals: number;
   inProgress: boolean;
 }
+
+export interface IResponseMatches {
+  type: number,
+  message: IMatches | string,
+}
