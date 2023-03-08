@@ -1,9 +1,6 @@
 import { ModelStatic } from 'sequelize';
 import Team from '../../database/models/TeamModel';
-// import ITeams from '../interfaces/ITeams';
-// import IMatches from '../interfaces/IMatches';
 import IServiceLeaderboard from '../interfaces/IServiceLeaderboard';
-// import TeamService from './TeamsService';
 import Matches from '../../database/models/MatcheModel';
 import ILeaderboard from '../interfaces/ILeaderboard';
 
@@ -128,7 +125,8 @@ function calcLeaderboard(team: Team[], matches: Matches[]) {
 }
 
 function sortLeaderboard(leaderboard: ILeaderboard[]) {
-  const sortILeaderboard = leaderboard.sort((a, b) => b.goalsOwn - a.goalsOwn)
+  const sortILeaderboard = leaderboard
+    .sort((a, b) => b.goalsOwn - a.goalsOwn)
     .sort((a, b) => b.goalsFavor - a.goalsFavor)
     .sort((a, b) => b.goalsBalance - a.goalsBalance)
     .sort((a, b) => b.totalVictories - a.totalVictories)
