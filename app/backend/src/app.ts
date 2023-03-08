@@ -3,6 +3,7 @@ import * as cors from 'cors';
 import teamsRouts from './api/routes/TeamsRouter';
 import loginRouter from './api/routes/LoginRouter';
 import matchesRouter from './api/routes/MatchesRouter';
+import LeaderboardRouter from './api/routes/LeaderboardRouter';
 
 class App {
   public app: express.Express;
@@ -21,6 +22,7 @@ class App {
     this.app.use('/teams', teamsRouts);
     this.app.use('/login', loginRouter);
     this.app.use('/matches', matchesRouter);
+    this.app.use('/leaderboard', LeaderboardRouter);
   }
 
   private config():void {
