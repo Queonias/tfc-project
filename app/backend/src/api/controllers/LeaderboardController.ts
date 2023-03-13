@@ -8,8 +8,8 @@ class LeaderboardController {
     this._service = service;
   }
 
-  async getAll(_req: Request, res: Response) {
-    const result = await this._service.findAll();
+  async getAllHome(_req: Request, res: Response) {
+    const result = await this._service.findAllHome();
     return res.status(200).json(result);
   }
 

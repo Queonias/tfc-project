@@ -20,7 +20,7 @@ export default class UserService implements IServiceLeaderboard {
   protected teamModel: ModelStatic<Team> = Team;
   protected matchesModel: ModelStatic<Matches> = Matches;
 
-  async findAll() {
+  async findAllHome() {
     const teams = await this.teamModel.findAll();
     const matches = await this.matchesModel.findAll();
     return sortLeaderboard(calcLeaderboard(teams, matches));
